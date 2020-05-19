@@ -1,3 +1,4 @@
+[![Build Status](https://dev.azure.com/doodlegraphics/Learn-CreatePipeline/_apis/build/status/Zhaph.mslearn-tailspin-spacegame-web?branchName=master)](https://dev.azure.com/doodlegraphics/Learn-CreatePipeline/_build/latest?definitionId=2&branchName=master)
 
 # Contributing
 
