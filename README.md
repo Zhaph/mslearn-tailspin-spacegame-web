@@ -1,4 +1,5 @@
 [![Build Status](https://dev.azure.com/doodlegraphics/Learn-CreatePipeline/_apis/build/status/Zhaph.mslearn-tailspin-spacegame-web?branchName=master)](https://dev.azure.com/doodlegraphics/Learn-CreatePipeline/_build/latest?definitionId=2&branchName=master)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Zhaph_mslearn-tailspin-spacegame-web&metric=alert_status)](https://sonarcloud.io/dashboard?id=Zhaph_mslearn-tailspin-spacegame-web)
 
 # Contributing
 
