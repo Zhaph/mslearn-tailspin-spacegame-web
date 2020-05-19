@@ -21,32 +21,45 @@ steps:
     reportgenerator -reports:$(Build.SourcesDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:HtmlInline_AzurePipelines
   displayName: 'Create code coverage report'
 
-- task: SonarCloudAnalyze@1
-  displayName: 'Run SonarCloud code analysis'
-  condition: |
-    and
-    (
-      succeeded(),
-      eq(variables['Build.Reason'], 'PullRequest'),
-      eq(variables['System.PullRequest.TargetBranch'], 'master')
-    )
+- ${{ if eq(parameters.buildConfiguration, 'Release') }}:
+  - task: SonarCloudAnalyze@1
+    displayName: 'Run SonarCloud code analysis'
+    condition: |
+      and
+      (
+        succeeded(),
+        eq(variables['Build.Reason'], 'PullRequest'),
+        eq(variables['System.PullRequest.TargetBranch'], 'master')
+      )
 
-- task: SonarCloudPublish@1
-  displayName: 'Publish SonarCloud quality gate results'
-  condition: |
-    and
-    (
-      succeeded(),
-      eq(variables['Build.Reason'], 'PullRequest'),
-      eq(variables['System.PullRequest.TargetBranch'], 'master')
-    )
+- ${{ if eq(parameters.buildConfiguration, 'Release') }}:
+  - task: SonarCloudPublish@1
+    displayName: 'Publish SonarCloud quality gate results'
+    condition: |
+      and
+      (
+        succeeded(),
+        eq(variables['Build.Reason'], 'PullRequest'),
+        eq(variables['System.PullRequest.TargetBranch'], 'master')
+      )
 
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish code coverage report'
   inputs:
     codeCoverageTool: 'cobertura'
     summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
-    
+
+- ${{ if eq(parameters.buildConfiguration, 'Release') }}:
+  - task: WhiteSource Bolt@20
+    displayName: 'Run WhiteSource Bolt'
+    condition: |
+      and
+      (
+        succeeded(),
+        eq(variables['Build.Reason'], 'PullRequest'),
+        eq(variables['System.PullRequest.TargetBranch'], 'master')
+      )
+
 - task: DotNetCoreCLI@2
   displayName: 'Publish the project - ${{ parameters.buildConfiguration }}'
   inputs:
